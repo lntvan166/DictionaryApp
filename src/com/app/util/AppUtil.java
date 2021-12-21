@@ -18,15 +18,15 @@ public class AppUtil {
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
-        String line = bufferedReader.readLine();;
+        String line = bufferedReader.readLine();
+        ;
         do {
-//            System.out.println(line);
+            System.out.println(line);
             String[] buffer = line.split("`");
-            if (buffer.length >= 2) {
-                String slang = buffer[0];
-                List<String> definition = List.of(buffer[1].split(" "));
-                slangWordList.put(slang, definition);
-            }
+            String slang = buffer[0];
+            List<String> definition = List.of(buffer[1].split(" "));
+            slangWordList.put(slang, definition);
+
 
             line = bufferedReader.readLine();
         } while (line != null);
