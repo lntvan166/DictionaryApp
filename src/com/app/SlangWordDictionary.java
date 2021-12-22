@@ -12,6 +12,8 @@ public class SlangWordDictionary {
 
     public static HashMap<String, List<String>> slangDict = new HashMap<>();
     public static HashMap<String, List<String>> rootSlangDict = new HashMap<>();
+    public static String historySlangSearch = "";
+    public static String historyDefinitionSearch = "";
 
     public static HashMap<String, List<String>> findBySlangWord(String slangWordToFind) {
         HashMap<String, List<String>> slangMatch = new HashMap<>();

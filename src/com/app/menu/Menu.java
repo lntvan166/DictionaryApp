@@ -38,17 +38,22 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String type = (String) typeComboBox.getSelectedItem();
+                String keyword = searchField.getText();
+
                 if (Objects.equals(type, "Slang Word")) {
-                    createAndShowSlangTable(SlangWordDictionary.findBySlangWord(searchField.getText()));
+                    SlangWordDictionary.historySlangSearch += keyword + "\n";
+                    createAndShowSlangTable(SlangWordDictionary.findBySlangWord(keyword));
                 } else {
-                    createAndShowSlangTable(SlangWordDictionary.findBuDefinition(searchField.getText()));
+                    SlangWordDictionary.historyDefinitionSearch += keyword + "\n";
+                    createAndShowSlangTable(SlangWordDictionary.findBuDefinition(keyword));
                 }
             }
         });
         historyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                History history = new History();
+                history.createAndShowGUI();
             }
         });
     }
@@ -62,8 +67,8 @@ public class Menu {
             @Override
             public void windowClosing(WindowEvent e) {
                 JFrame cancelFrame = new JFrame("EXIT");
-                if(JOptionPane.showConfirmDialog(cancelFrame, "Confirm if you want to exit", "EXIT",
-                        JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION) {
+                if (JOptionPane.showConfirmDialog(cancelFrame, "Confirm if you want to exit", "EXIT",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
                     System.exit(0);
                 }
             }
@@ -86,7 +91,7 @@ public class Menu {
             List<String> definitions = slangDict.getValue();
 
             row[0] = slangWord;
-            for(String definition: definitions) {
+            for (String definition : definitions) {
                 row[1] = definition;
                 model.addRow(row);
             }
