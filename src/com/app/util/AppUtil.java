@@ -21,10 +21,9 @@ public class AppUtil {
         String line = bufferedReader.readLine();
         ;
         do {
-            System.out.println(line);
             String[] buffer = line.split("`");
             String slang = buffer[0];
-            List<String> definition = List.of(buffer[1].split(" "));
+            List<String> definition = List.of(buffer[1].split("\\| "));
             slangWordList.put(slang, definition);
 
 

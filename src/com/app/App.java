@@ -4,7 +4,6 @@ import com.app.menu.Menu;
 import com.app.util.AppUtil;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,22 +17,23 @@ import java.util.Set;
 public class App {
     private Menu menu;
 
-    public static HashMap slangWordList;
-
     public App() throws IOException {
-        menu = new Menu();
 
-        slangWordList = AppUtil.readRootDataFromTextFile("slang.txt");
+        SlangWordDictionary.slangDict = AppUtil.readRootDataFromTextFile("slang.txt");
+        SlangWordDictionary.rootSlangDict = SlangWordDictionary.slangDict;
+
+        menu = new Menu();
 
 
 
     }
 
     public void start() {
-        Set<Map.Entry<String, List<String>>> setSlangWordList = slangWordList.entrySet();
-
-        for (Map.Entry<String, List<String>> slangWord : setSlangWordList) {
-            System.out.println(slangWord.getKey() + ": " + slangWord.getValue());
-        }
+//        Set<Map.Entry<String, List<String>>> setSlangWordList = slangWordList.entrySet();
+//
+//        for (Map.Entry<String, List<String>> slangWord : setSlangWordList) {
+//            System.out.println(slangWord.getKey() + ": " + slangWord.getValue());
+//        }
+        menu.createAndShowGUI();
     }
 }
