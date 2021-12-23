@@ -3,9 +3,6 @@ package com.app.menu;
 import com.app.SlangWordDictionary;
 
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Vector;
 
 /**
  * com.app.menu

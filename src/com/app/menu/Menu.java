@@ -34,11 +34,19 @@ public class Menu {
     private JScrollPane slangScroll;
     private JButton historyButton;
     private JButton resetButton;
+    private JButton button1;
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
+    private JButton button5;
+    private JButton button6;
+    private JButton button7;
 
     public Menu() {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                addHistory();
                 searchButtonAction();
             }
         });
@@ -102,11 +110,18 @@ public class Menu {
                 searchButtonAction();
             }
         });
+        searchField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addHistory();
+                searchButtonAction();
+            }
+        });
     }
 
     public void createAndShowGUI() {
         createAndShowSlangTable(SlangWordDictionary.slangDict);
-        frameMain = new JFrame("App chat login");
+        frameMain = new JFrame("Slang word dictionary");
         frameMain.setContentPane(panelMain);
         frameMain.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frameMain.addWindowListener(new WindowAdapter() {
@@ -148,16 +163,27 @@ public class Menu {
         columns.getColumn(1).setMinWidth(150);
     }
 
-    void searchButtonAction() {
+    public void searchButtonAction() {
         String type = (String) typeComboBox.getSelectedItem();
         String keyword = searchField.getText();
 
         if (Objects.equals(type, "Slang Word")) {
-            SlangWordDictionary.historySlangSearch += keyword + "\n";
             createAndShowSlangTable(SlangWordDictionary.findBySlangWord(keyword));
         } else {
-            SlangWordDictionary.historyDefinitionSearch += keyword + "\n";
             createAndShowSlangTable(SlangWordDictionary.findBuDefinition(keyword));
+        }
+    }
+
+    public void addHistory() {
+        String type = (String) typeComboBox.getSelectedItem();
+        String keyword = searchField.getText();
+
+        if(!Objects.equals(keyword, "")){
+            if (Objects.equals(type, "Slang Word")) {
+                SlangWordDictionary.historySlangSearch += keyword + "\n";
+            } else {
+                SlangWordDictionary.historyDefinitionSearch += keyword + "\n";
+            }
         }
     }
 }

@@ -1,9 +1,7 @@
 package com.app.util;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -19,7 +17,7 @@ public class AppUtil {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
         String line = bufferedReader.readLine();
-        ;
+
         do {
             String[] buffer = line.split("`");
             String slang = buffer[0];

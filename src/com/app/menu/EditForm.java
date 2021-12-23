@@ -22,8 +22,8 @@ public class EditForm {
     private JButton cancelButton;
     private JPanel panelMain;
 
-    private String oldSlangWord;
-    private String oldDefinition;
+    private final String oldSlangWord;
+    private final String oldDefinition;
 
     public EditForm(String slangWord, String definition) {
         textField1.setText(slangWord);

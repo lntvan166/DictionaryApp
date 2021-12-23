@@ -1,7 +1,5 @@
 package com.app;
 
-import com.app.util.AppUtil;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.util.*;

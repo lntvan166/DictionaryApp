@@ -6,7 +6,6 @@ import com.app.SlangWordDictionary;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 
 /**
  * com.app.menu
