@@ -22,9 +22,9 @@ public class Menu {
 
     private JPanel panelCoMain;
     private JTable slangTable;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
+    private JButton addButton;
+    private JButton editButton;
+    private JButton deleteButton;
     private JTextField searchField;
     private JComboBox typeComboBox;
     private JButton searchButton;
@@ -37,16 +37,7 @@ public class Menu {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String type = (String) typeComboBox.getSelectedItem();
-                String keyword = searchField.getText();
-
-                if (Objects.equals(type, "Slang Word")) {
-                    SlangWordDictionary.historySlangSearch += keyword + "\n";
-                    createAndShowSlangTable(SlangWordDictionary.findBySlangWord(keyword));
-                } else {
-                    SlangWordDictionary.historyDefinitionSearch += keyword + "\n";
-                    createAndShowSlangTable(SlangWordDictionary.findBuDefinition(keyword));
-                }
+                searchButtonAction();
             }
         });
         historyButton.addActionListener(new ActionListener() {
@@ -54,6 +45,28 @@ public class Menu {
             public void actionPerformed(ActionEvent e) {
                 History history = new History();
                 history.createAndShowGUI();
+            }
+        });
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddForm addForm = new AddForm();
+                addForm.createAndShowGUI();
+            }
+        });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = slangTable.getSelectedRow();
+                if (row==-1) {
+                    JOptionPane.showMessageDialog(null, "Select a slang word first!");
+                } else {
+
+                    String slangWord = (String) slangTable.getModel().getValueAt(row, 0);
+                    String definition = (String) slangTable.getModel().getValueAt(row, 1);
+                    SlangWordDictionary.removeSlangWord(slangWord, definition);
+                    searchButtonAction();
+                }
             }
         });
     }
@@ -100,5 +113,18 @@ public class Menu {
         TableColumnModel columns = slangTable.getColumnModel();
         columns.getColumn(0).setWidth(50);
         columns.getColumn(1).setMinWidth(150);
+    }
+
+    void searchButtonAction() {
+        String type = (String) typeComboBox.getSelectedItem();
+        String keyword = searchField.getText();
+
+        if (Objects.equals(type, "Slang Word")) {
+            SlangWordDictionary.historySlangSearch += keyword + "\n";
+            createAndShowSlangTable(SlangWordDictionary.findBySlangWord(keyword));
+        } else {
+            SlangWordDictionary.historyDefinitionSearch += keyword + "\n";
+            createAndShowSlangTable(SlangWordDictionary.findBuDefinition(keyword));
+        }
     }
 }

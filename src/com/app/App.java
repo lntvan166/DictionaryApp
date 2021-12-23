@@ -15,7 +15,7 @@ import java.util.Set;
  * Description: ...
  */
 public class App {
-    private Menu menu;
+    public static Menu menu;
 
     public App() throws IOException {
 

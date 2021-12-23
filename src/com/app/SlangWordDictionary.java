@@ -52,4 +52,24 @@ public class SlangWordDictionary {
     public static void resetDict() {
         slangDict = rootSlangDict;
     }
+
+    public static void addSlangWord(String slangWord, String definition) {
+        List<String> values = new ArrayList<>();
+        if (slangDict.containsKey(slangWord)) {
+            List<String> currentValues = slangDict.get(slangWord);
+            values.addAll(currentValues);
+            values.add(definition);
+            slangDict.replace(slangWord, values);
+        } else {
+            values.add(definition);
+            slangDict.putIfAbsent(slangWord, values);
+        }
+    }
+
+    public static void removeSlangWord(String slangWord, String definition) {
+        List<String> currentValues = slangDict.get(slangWord);
+        List<String> values = new ArrayList<>(currentValues);
+        values.remove(definition);
+        slangDict.replace(slangWord, values);
+    }
 }
