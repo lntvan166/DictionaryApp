@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -32,6 +33,7 @@ public class Menu {
     private JPanel panelMain;
     private JScrollPane slangScroll;
     private JButton historyButton;
+    private JButton resetButton;
 
     public Menu() {
         searchButton.addActionListener(new ActionListener() {
@@ -58,15 +60,46 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = slangTable.getSelectedRow();
-                if (row==-1) {
+                if (row == -1) {
                     JOptionPane.showMessageDialog(null, "Select a slang word first!");
                 } else {
 
                     String slangWord = (String) slangTable.getModel().getValueAt(row, 0);
                     String definition = (String) slangTable.getModel().getValueAt(row, 1);
-                    SlangWordDictionary.removeSlangWord(slangWord, definition);
-                    searchButtonAction();
+                    JFrame confirmFrame = new JFrame("EXIT");
+                    if (JOptionPane.showConfirmDialog(confirmFrame,
+                            "Confirm if you want to delete slang word:\n" + slangWord + ": " + definition, "EXIT",
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+                        SlangWordDictionary.removeSlangWord(slangWord, definition);
+                        searchButtonAction();
+                    }
                 }
+            }
+        });
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = slangTable.getSelectedRow();
+                if (row == -1) {
+                    JOptionPane.showMessageDialog(null, "Select a slang word first!");
+                } else {
+
+                    String slangWord = (String) slangTable.getModel().getValueAt(row, 0);
+                    String definition = (String) slangTable.getModel().getValueAt(row, 1);
+                    EditForm editForm = new EditForm(slangWord, definition);
+                    editForm.createAndShowGUI();
+                }
+            }
+        });
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    SlangWordDictionary.resetDict();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                searchButtonAction();
             }
         });
     }

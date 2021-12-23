@@ -1,5 +1,9 @@
 package com.app;
 
+import com.app.util.AppUtil;
+
+import javax.swing.*;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -10,7 +14,7 @@ import java.util.*;
  */
 public class SlangWordDictionary {
 
-    public static HashMap<String, List<String>> slangDict = new HashMap<>();
+    public static HashMap<String, List<String>> slangDict;
     public static HashMap<String, List<String>> rootSlangDict = new HashMap<>();
     public static String historySlangSearch = "";
     public static String historyDefinitionSearch = "";
@@ -40,7 +44,7 @@ public class SlangWordDictionary {
             String key = slangWord.getKey();
             List<String> values = slangWord.getValue();
             for (String value : values) {
-                if(value.toLowerCase().contains(definitionToFind.toLowerCase())){
+                if (value.toLowerCase().contains(definitionToFind.toLowerCase())) {
                     slangMatch.put(key, List.of(new String[]{value}));
                 }
             }
@@ -49,8 +53,9 @@ public class SlangWordDictionary {
         return slangMatch;
     }
 
-    public static void resetDict() {
-        slangDict = rootSlangDict;
+    public static void resetDict() throws IOException {
+        slangDict.clear();
+        slangDict.putAll(rootSlangDict);
     }
 
     public static void addSlangWord(String slangWord, String definition) {
@@ -58,8 +63,28 @@ public class SlangWordDictionary {
         if (slangDict.containsKey(slangWord)) {
             List<String> currentValues = slangDict.get(slangWord);
             values.addAll(currentValues);
-            values.add(definition);
-            slangDict.replace(slangWord, values);
+            if (values.contains(definition)) {
+                String[] options = {"Duplicate", "Overwrite"};
+                JFrame confirmFrame = new JFrame();
+                int result = JOptionPane.showOptionDialog(
+                        confirmFrame,
+                        "Slang word is already exist!\n" +
+                                "Do you want to duplicate or overwrite it?",
+                        "Slang word already exist",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]
+                );
+                if (result==JOptionPane.YES_OPTION) {
+                    values.add(definition);
+                    slangDict.replace(slangWord, values);
+                }
+            } else {
+                values.add(definition);
+                slangDict.replace(slangWord, values);
+            }
         } else {
             values.add(definition);
             slangDict.putIfAbsent(slangWord, values);

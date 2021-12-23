@@ -4,6 +4,7 @@ import com.app.menu.Menu;
 import com.app.util.AppUtil;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class App {
     public App() throws IOException {
 
         SlangWordDictionary.slangDict = AppUtil.readRootDataFromTextFile("slang.txt");
-        SlangWordDictionary.rootSlangDict = SlangWordDictionary.slangDict;
+        SlangWordDictionary.rootSlangDict.putAll(SlangWordDictionary.slangDict);
 
         menu = new Menu();
 
