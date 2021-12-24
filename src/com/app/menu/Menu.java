@@ -29,18 +29,20 @@ public class Menu {
     private JTextField searchField;
     private JComboBox typeComboBox;
     private JButton searchButton;
-    private JButton randomSlangButton;
     private JPanel panelMain;
     private JScrollPane slangScroll;
     private JButton historyButton;
     private JButton resetButton;
-    private JButton button1;
+    private JButton randomButton;
     private JButton button2;
     private JButton button3;
     private JButton button4;
     private JButton button5;
     private JButton button6;
     private JButton button7;
+    private JLabel randomSlangField;
+    private JLabel randomDefinitionField;
+    private JComboBox comboBox1;
 
     public Menu() {
         searchButton.addActionListener(new ActionListener() {
@@ -117,10 +119,17 @@ public class Menu {
                 searchButtonAction();
             }
         });
+        randomButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                randomButtonAction();
+            }
+        });
     }
 
     public void createAndShowGUI() {
         createAndShowSlangTable(SlangWordDictionary.slangDict);
+        randomButtonAction();
         frameMain = new JFrame("Slang word dictionary");
         frameMain.setContentPane(panelMain);
         frameMain.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -174,11 +183,18 @@ public class Menu {
         }
     }
 
+    public void randomButtonAction() {
+        String randomSlangWord = SlangWordDictionary.getRandomSlang();
+        String randomDefinition = SlangWordDictionary.getRandomDefinitionBySlang(randomSlangWord);
+        randomSlangField.setText(randomSlangWord);
+        randomDefinitionField.setText(randomDefinition);
+    }
+
     public void addHistory() {
         String type = (String) typeComboBox.getSelectedItem();
         String keyword = searchField.getText();
 
-        if(!Objects.equals(keyword, "")){
+        if (!Objects.equals(keyword, "")) {
             if (Objects.equals(type, "Slang Word")) {
                 SlangWordDictionary.historySlangSearch += keyword + "\n";
             } else {

@@ -95,4 +95,19 @@ public class SlangWordDictionary {
         values.remove(definition);
         slangDict.replace(slangWord, values);
     }
+
+    public static String getRandomSlang() {
+        List<String> keysArray = new ArrayList<>(slangDict.keySet());
+        Random r = new Random();
+
+        return keysArray.get(r.nextInt(keysArray.size()));
+    }
+
+    public static String getRandomDefinitionBySlang(String slangWord) {
+        Random r = new Random();
+
+        List<String> values = slangDict.get(slangWord);
+
+        return values.get(r.nextInt(values.size()));
+    }
 }
