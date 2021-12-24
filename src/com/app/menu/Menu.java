@@ -34,15 +34,16 @@ public class Menu {
     private JButton historyButton;
     private JButton resetButton;
     private JButton randomButton;
-    private JButton button2;
-    private JButton button3;
+    private JButton nextQuestionButton;
     private JButton button4;
     private JButton button5;
     private JButton button6;
     private JButton button7;
     private JLabel randomSlangField;
     private JLabel randomDefinitionField;
-    private JComboBox comboBox1;
+    private JComboBox typeGame;
+
+    private String answer;
 
     public Menu() {
         searchButton.addActionListener(new ActionListener() {
@@ -125,6 +126,17 @@ public class Menu {
                 randomButtonAction();
             }
         });
+        nextQuestionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                renderQuizGame();
+            }
+        });
+    }
+
+    private void renderQuizGame() {
+        String type = (String) typeGame.getSelectedItem();
+
     }
 
     public void createAndShowGUI() {

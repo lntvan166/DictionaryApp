@@ -38,15 +38,20 @@ public class SlangWordDictionary {
 
         Set<Map.Entry<String, List<String>>> setSlangWordList = SlangWordDictionary.slangDict.entrySet();
 
+
         for (Map.Entry<String, List<String>> slangWord : setSlangWordList) {
             String key = slangWord.getKey();
+            List<String> newValues = new ArrayList<>();
             List<String> values = slangWord.getValue();
             for (String value : values) {
+
                 if (value.toLowerCase().contains(definitionToFind.toLowerCase())) {
-                    slangMatch.put(key, List.of(new String[]{value}));
+                    newValues.add(value);
                 }
             }
+            slangMatch.put(key, newValues);
         }
+
 
         return slangMatch;
     }
@@ -75,7 +80,7 @@ public class SlangWordDictionary {
                         options,
                         options[0]
                 );
-                if (result==JOptionPane.YES_OPTION) {
+                if (result == JOptionPane.YES_OPTION) {
                     values.add(definition);
                     slangDict.replace(slangWord, values);
                 }
