@@ -35,15 +35,18 @@ public class Menu {
     private JButton resetButton;
     private JButton randomButton;
     private JButton nextQuestionButton;
-    private JButton button4;
-    private JButton button5;
-    private JButton button6;
-    private JButton button7;
+    private JButton answerAButton;
+    private JButton answerBButton;
+    private JButton answerCButton;
+    private JButton answerDButton;
     private JLabel randomSlangField;
     private JLabel randomDefinitionField;
     private JComboBox typeGame;
+    private JLabel questionField;
+    private JPanel quizPanel;
 
-    private String answer;
+    private String slangAnswer;
+    private String definitionAnswer;
 
     public Menu() {
         searchButton.addActionListener(new ActionListener() {
@@ -132,16 +135,94 @@ public class Menu {
                 renderQuizGame();
             }
         });
+        answerAButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(answerAButton.getText());
+            }
+        });
+        answerBButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(answerBButton.getText());
+            }
+        });
+        answerCButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(answerCButton.getText());
+            }
+        });
+        answerDButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(answerDButton.getText());
+            }
+        });
+        typeGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                renderQuizGame();
+            }
+        });
     }
 
-    private void renderQuizGame() {
+    public void renderQuizGame() {
         String type = (String) typeGame.getSelectedItem();
 
+        String newSlang = SlangWordDictionary.getRandomSlang();
+
+        while (Objects.equals(newSlang, slangAnswer)) {
+            newSlang = SlangWordDictionary.getRandomSlang();
+        }
+
+        slangAnswer = newSlang;
+        definitionAnswer = SlangWordDictionary.getRandomDefinitionBySlang(slangAnswer);
+
+        Random r = new Random();
+        int answer = r.nextInt(4);
+
+        if (Objects.equals(type, "Slang Word")) {
+            questionField.setText("     Find definition for '" + slangAnswer + "'");
+            List<String> definition = SlangWordDictionary.get4RandomDefinition();
+            definition.set(answer, definitionAnswer);
+            answerAButton.setText(definition.get(0));
+            answerBButton.setText(definition.get(1));
+            answerCButton.setText(definition.get(2));
+            answerDButton.setText(definition.get(3));
+        } else {
+            questionField.setText("     Find slang word for '" + definitionAnswer + "'");
+            List<String> slangWord = SlangWordDictionary.get4RandomSlang();
+            slangWord.set(answer, slangAnswer);
+            answerAButton.setText(slangWord.get(0));
+            answerBButton.setText(slangWord.get(1));
+            answerCButton.setText(slangWord.get(2));
+            answerDButton.setText(slangWord.get(3));
+        }
+
+    }
+
+    public void checkAnswer(String answer) {
+        String type = (String) typeGame.getSelectedItem();
+        if (Objects.equals(type, "Slang Word")) {
+            if (Objects.equals(answer, definitionAnswer)) {
+                JOptionPane.showMessageDialog(quizPanel, "Correct answer!");
+            } else {
+                JOptionPane.showMessageDialog(quizPanel, "Wrong answer!");
+            }
+        } else {
+            if (Objects.equals(answer, slangAnswer)) {
+                JOptionPane.showMessageDialog(quizPanel, "Correct answer!");
+            } else {
+                JOptionPane.showMessageDialog(quizPanel, "Wrong answer!");
+            }
+        }
     }
 
     public void createAndShowGUI() {
         createAndShowSlangTable(SlangWordDictionary.slangDict);
         randomButtonAction();
+        renderQuizGame();
         frameMain = new JFrame("Slang word dictionary");
         frameMain.setContentPane(panelMain);
         frameMain.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
