@@ -72,7 +72,9 @@
           </grid>
           <scrollpane id="6549c" binding="slangScroll">
             <constraints border-constraint="Center"/>
-            <properties/>
+            <properties>
+              <preferredSize width="600" height="429"/>
+            </properties>
             <border type="bevel-lowered"/>
             <children>
               <component id="fcc02" class="javax.swing.JTable" binding="slangTable">
@@ -98,6 +100,7 @@
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints border-constraint="East"/>
             <properties>
+              <autoscrolls value="false"/>
               <preferredSize width="450" height="-1"/>
             </properties>
             <border type="line">

@@ -116,24 +116,28 @@ public class SlangWordDictionary {
         return values.get(r.nextInt(values.size()));
     }
 
-    public static List<String> get4RandomSlang() {
+    public static List<String> get4RandomSlang(String answer) {
         List<String> randomSlang = new ArrayList<>();
-        while (randomSlang.size()<4) {
+        while (randomSlang.size() < 4) {
             String newSlang = getRandomSlang();
-            if (!randomSlang.contains(newSlang)) {
+            if (!randomSlang.contains(newSlang) && !Objects.equals(newSlang, answer)) {
                 randomSlang.add(newSlang);
             }
         }
         return randomSlang;
     }
 
-    public static List<String> get4RandomDefinition() {
+    public static List<String> get4RandomDefinition(String answer) {
         List<String> randomDefinition = new ArrayList<>();
-        while (randomDefinition.size()<4) {
+        List<String> randomSlang = new ArrayList<>();
+        while (randomDefinition.size() < 4) {
             String newSlang = getRandomSlang();
-            String newDefinition = getRandomDefinitionBySlang(newSlang);
-            if (!randomDefinition.contains(newDefinition)) {
-                randomDefinition.add(newDefinition);
+            if (!randomSlang.contains(newSlang) && !Objects.equals(newSlang, answer)) {
+                randomSlang.add(newSlang);
+                String newDefinition = getRandomDefinitionBySlang(newSlang);
+                if (!randomDefinition.contains(newDefinition)) {
+                    randomDefinition.add(newDefinition);
+                }
             }
         }
         return randomDefinition;

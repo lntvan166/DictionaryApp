@@ -5,12 +5,14 @@ import com.app.SlangWordDictionary;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 /**
  * com.app.menu
@@ -184,7 +186,7 @@ public class Menu {
 
         if (Objects.equals(type, "Slang Word")) {
             questionField.setText("     Find definition for '" + slangAnswer + "'");
-            List<String> definition = SlangWordDictionary.get4RandomDefinition();
+            List<String> definition = SlangWordDictionary.get4RandomDefinition(slangAnswer);
             definition.set(answer, definitionAnswer);
             answerAButton.setText(definition.get(0));
             answerBButton.setText(definition.get(1));
@@ -192,7 +194,7 @@ public class Menu {
             answerDButton.setText(definition.get(3));
         } else {
             questionField.setText("     Find slang word for '" + definitionAnswer + "'");
-            List<String> slangWord = SlangWordDictionary.get4RandomSlang();
+            List<String> slangWord = SlangWordDictionary.get4RandomSlang(slangAnswer);
             slangWord.set(answer, slangAnswer);
             answerAButton.setText(slangWord.get(0));
             answerBButton.setText(slangWord.get(1));
@@ -236,6 +238,11 @@ public class Menu {
                 }
             }
         });
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = screenSize.height;
+        int width = screenSize.width;
+        frameMain.setSize(width/2, height/2);
+
         frameMain.setLocationRelativeTo(null);
         frameMain.pack();
         frameMain.setVisible(true);

@@ -41,7 +41,7 @@ public class AddForm {
     }
 
     public void createAndShowGUI() {
-        frameMain = new JFrame("App chat login");
+        frameMain = new JFrame("Add slang word");
         frameMain.setContentPane(panelMain);
         frameMain.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameMain.setLocationRelativeTo(null);

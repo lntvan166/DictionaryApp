@@ -23,7 +23,7 @@ public class History {
     }
 
     public void createAndShowGUI() {
-        frameMain = new JFrame("App chat login");
+        frameMain = new JFrame("Search history");
         frameMain.setContentPane(mainPanel);
         frameMain.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameMain.setLocationRelativeTo(null);
