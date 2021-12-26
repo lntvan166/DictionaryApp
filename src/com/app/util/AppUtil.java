@@ -44,7 +44,7 @@ public class AppUtil {
 
     public static HashMap<String, List<String>> deserializeDictionary() throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream("slang.ser");
-        ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         HashMap<String, List<String>> result = (HashMap<String, List<String>>) objectInputStream.readObject();
         objectInputStream.close();
         fileInputStream.close();
@@ -52,17 +52,13 @@ public class AppUtil {
         return result;
     }
 
-    public static HashMap<String, List<String>> getData() {
+    public static HashMap<String, List<String>> getData() throws IOException {
         HashMap<String, List<String>> slangWordList = new HashMap<>();
 
         try {
             slangWordList = deserializeDictionary();
         } catch (IOException | ClassNotFoundException e) {
-            try {
-                slangWordList = readRootDataFromTextFile("slang.txt");
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Data missing.\nCannot find slang.txt or serialization file!");
-            }
+            slangWordList = readRootDataFromTextFile("slang.txt");
         }
 
         return slangWordList;

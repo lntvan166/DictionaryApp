@@ -11,12 +11,7 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) {
-        App app = null;
-        try {
-            app = new App();
-            app.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        App app = new App();
+        app.start();
     }
 }

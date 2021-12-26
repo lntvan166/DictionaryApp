@@ -3,6 +3,7 @@ package com.app;
 import com.app.menu.Menu;
 import com.app.util.AppUtil;
 
+import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -14,14 +15,17 @@ import java.io.IOException;
 public class App {
     public static Menu menu;
 
-    public App() throws IOException {
+    public App() {
 
-        DictionaryUtil.slangDict = AppUtil.getData();
-        DictionaryUtil.rootSlangDict.putAll(DictionaryUtil.slangDict);
+        try {
+            DictionaryUtil.slangDict = AppUtil.getData();
+            DictionaryUtil.rootSlangDict.putAll(DictionaryUtil.slangDict);
 
-        menu = new Menu();
-
-
+            menu = new Menu();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Data missing.\nCannot find slang.txt or serialization file!");
+            System.exit(0);
+        }
 
     }
 
