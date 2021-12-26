@@ -1,7 +1,7 @@
 package com.app.menu;
 
 import com.app.App;
-import com.app.SlangWordDictionary;
+import com.app.DictionaryUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +27,7 @@ public class AddForm {
             public void actionPerformed(ActionEvent e) {
                 String slangWord = textField1.getText().toUpperCase();
                 String definition = textField2.getText();
-                SlangWordDictionary.addSlangWord(slangWord, definition);
+                DictionaryUtil.addSlangWord(slangWord, definition);
                 App.menu.searchButtonAction();
                 frameMain.dispose();
             }

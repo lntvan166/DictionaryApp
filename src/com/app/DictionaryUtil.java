@@ -10,7 +10,7 @@ import java.util.*;
  * Date 12/22/2021 - 7:22 PM
  * Description: ...
  */
-public class SlangWordDictionary {
+public class DictionaryUtil {
 
     public static HashMap<String, List<String>> slangDict;
     public static HashMap<String, List<String>> rootSlangDict = new HashMap<>();
@@ -36,7 +36,7 @@ public class SlangWordDictionary {
     public static HashMap<String, List<String>> findBuDefinition(String definitionToFind) {
         HashMap<String, List<String>> slangMatch = new HashMap<>();
 
-        Set<Map.Entry<String, List<String>>> setSlangWordList = SlangWordDictionary.slangDict.entrySet();
+        Set<Map.Entry<String, List<String>>> setSlangWordList = DictionaryUtil.slangDict.entrySet();
 
 
         for (Map.Entry<String, List<String>> slangWord : setSlangWordList) {

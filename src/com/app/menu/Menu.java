@@ -1,6 +1,7 @@
 package com.app.menu;
 
-import com.app.SlangWordDictionary;
+import com.app.DictionaryUtil;
+import com.app.util.AppUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -86,7 +87,7 @@ public class Menu {
                     if (JOptionPane.showConfirmDialog(confirmFrame,
                             "Confirm if you want to delete slang word:\n" + slangWord + ": " + definition, "EXIT",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
-                        SlangWordDictionary.removeSlangWord(slangWord, definition);
+                        DictionaryUtil.removeSlangWord(slangWord, definition);
                         searchButtonAction();
                     }
                 }
@@ -111,7 +112,7 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    SlangWordDictionary.resetDict();
+                    DictionaryUtil.resetDict();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -172,21 +173,21 @@ public class Menu {
     public void renderQuizGame() {
         String type = (String) typeGame.getSelectedItem();
 
-        String newSlang = SlangWordDictionary.getRandomSlang();
+        String newSlang = DictionaryUtil.getRandomSlang();
 
         while (Objects.equals(newSlang, slangAnswer)) {
-            newSlang = SlangWordDictionary.getRandomSlang();
+            newSlang = DictionaryUtil.getRandomSlang();
         }
 
         slangAnswer = newSlang;
-        definitionAnswer = SlangWordDictionary.getRandomDefinitionBySlang(slangAnswer);
+        definitionAnswer = DictionaryUtil.getRandomDefinitionBySlang(slangAnswer);
 
         Random r = new Random();
         int answer = r.nextInt(4);
 
         if (Objects.equals(type, "Slang Word")) {
             questionField.setText("     Find definition for '" + slangAnswer + "'");
-            List<String> definition = SlangWordDictionary.get4RandomDefinition(slangAnswer);
+            List<String> definition = DictionaryUtil.get4RandomDefinition(slangAnswer);
             definition.set(answer, definitionAnswer);
             answerAButton.setText(definition.get(0));
             answerBButton.setText(definition.get(1));
@@ -194,7 +195,7 @@ public class Menu {
             answerDButton.setText(definition.get(3));
         } else {
             questionField.setText("     Find slang word for '" + definitionAnswer + "'");
-            List<String> slangWord = SlangWordDictionary.get4RandomSlang(slangAnswer);
+            List<String> slangWord = DictionaryUtil.get4RandomSlang(slangAnswer);
             slangWord.set(answer, slangAnswer);
             answerAButton.setText(slangWord.get(0));
             answerBButton.setText(slangWord.get(1));
@@ -222,7 +223,7 @@ public class Menu {
     }
 
     public void createAndShowGUI() {
-        createAndShowSlangTable(SlangWordDictionary.slangDict);
+        createAndShowSlangTable(DictionaryUtil.slangDict);
         randomButtonAction();
         renderQuizGame();
         frameMain = new JFrame("Slang word dictionary");
@@ -234,6 +235,11 @@ public class Menu {
                 JFrame cancelFrame = new JFrame("EXIT");
                 if (JOptionPane.showConfirmDialog(cancelFrame, "Confirm if you want to exit", "EXIT",
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+                    try {
+                        AppUtil.serializeDictionary();
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+                    }
                     System.exit(0);
                 }
             }
@@ -277,15 +283,15 @@ public class Menu {
         String keyword = searchField.getText();
 
         if (Objects.equals(type, "Slang Word")) {
-            createAndShowSlangTable(SlangWordDictionary.findBySlangWord(keyword));
+            createAndShowSlangTable(DictionaryUtil.findBySlangWord(keyword));
         } else {
-            createAndShowSlangTable(SlangWordDictionary.findBuDefinition(keyword));
+            createAndShowSlangTable(DictionaryUtil.findBuDefinition(keyword));
         }
     }
 
     public void randomButtonAction() {
-        String randomSlangWord = SlangWordDictionary.getRandomSlang();
-        String randomDefinition = SlangWordDictionary.getRandomDefinitionBySlang(randomSlangWord);
+        String randomSlangWord = DictionaryUtil.getRandomSlang();
+        String randomDefinition = DictionaryUtil.getRandomDefinitionBySlang(randomSlangWord);
         randomSlangField.setText(randomSlangWord);
         randomDefinitionField.setText(randomDefinition);
     }
@@ -296,9 +302,9 @@ public class Menu {
 
         if (!Objects.equals(keyword, "")) {
             if (Objects.equals(type, "Slang Word")) {
-                SlangWordDictionary.historySlangSearch += keyword + "\n";
+                DictionaryUtil.historySlangSearch += keyword + "\n";
             } else {
-                SlangWordDictionary.historyDefinitionSearch += keyword + "\n";
+                DictionaryUtil.historyDefinitionSearch += keyword + "\n";
             }
         }
     }

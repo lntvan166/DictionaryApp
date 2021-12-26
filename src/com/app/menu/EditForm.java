@@ -1,7 +1,7 @@
 package com.app.menu;
 
 import com.app.App;
-import com.app.SlangWordDictionary;
+import com.app.DictionaryUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -44,8 +44,8 @@ public class EditForm {
                 String slangWord = textField1.getText().toUpperCase();
                 String definition = textField2.getText();
                 if(!Objects.equals(slangWord, oldSlangWord) || !Objects.equals(definition, oldDefinition)) {
-                    SlangWordDictionary.removeSlangWord(oldSlangWord, oldDefinition);
-                    SlangWordDictionary.addSlangWord(slangWord, definition);
+                    DictionaryUtil.removeSlangWord(oldSlangWord, oldDefinition);
+                    DictionaryUtil.addSlangWord(slangWord, definition);
                     App.menu.searchButtonAction();
                 }
                 frameMain.dispose();

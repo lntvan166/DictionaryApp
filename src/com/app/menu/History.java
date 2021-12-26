@@ -1,6 +1,6 @@
 package com.app.menu;
 
-import com.app.SlangWordDictionary;
+import com.app.DictionaryUtil;
 
 import javax.swing.*;
 
@@ -18,8 +18,8 @@ public class History {
     private JTextArea slangArea;
 
     public History() {
-        slangArea.setText(SlangWordDictionary.historySlangSearch);
-        definitionArea.setText(SlangWordDictionary.historyDefinitionSearch);
+        slangArea.setText(DictionaryUtil.historySlangSearch);
+        definitionArea.setText(DictionaryUtil.historyDefinitionSearch);
     }
 
     public void createAndShowGUI() {

@@ -1,5 +1,8 @@
 package com.app.util;
 
+import com.app.DictionaryUtil;
+
+import javax.swing.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
@@ -31,9 +34,37 @@ public class AppUtil {
         return slangWordList;
     }
 
+    public static void serializeDictionary() throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream("slang.ser");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(DictionaryUtil.slangDict);
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    public static HashMap<String, List<String>> deserializeDictionary() throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream("slang.ser");
+        ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
+        HashMap<String, List<String>> result = (HashMap<String, List<String>>) objectInputStream.readObject();
+        objectInputStream.close();
+        fileInputStream.close();
+
+        return result;
+    }
+
     public static HashMap<String, List<String>> getData() {
+        HashMap<String, List<String>> slangWordList = new HashMap<>();
 
+        try {
+            slangWordList = deserializeDictionary();
+        } catch (IOException | ClassNotFoundException e) {
+            try {
+                slangWordList = readRootDataFromTextFile("slang.txt");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Data missing.\nCannot find slang.txt or serialization file!");
+            }
+        }
 
-        return null;
+        return slangWordList;
     }
 }

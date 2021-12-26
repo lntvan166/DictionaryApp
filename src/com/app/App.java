@@ -16,8 +16,8 @@ public class App {
 
     public App() throws IOException {
 
-        SlangWordDictionary.slangDict = AppUtil.readRootDataFromTextFile("slang.txt");
-        SlangWordDictionary.rootSlangDict.putAll(SlangWordDictionary.slangDict);
+        DictionaryUtil.slangDict = AppUtil.getData();
+        DictionaryUtil.rootSlangDict.putAll(DictionaryUtil.slangDict);
 
         menu = new Menu();
 
